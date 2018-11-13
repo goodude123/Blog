@@ -30,6 +30,8 @@ def register(request):
             login(request, user)
 
             return redirect(reverse('cms:main'))
+        else:
+            return redirect(reverse('cms:register'))
             
     elif request.method == 'GET':
         form = UserCreationForm()
