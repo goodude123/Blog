@@ -6,5 +6,6 @@ htmlcov/
 .vscode
 db.sqlite3*
 views.cpython-36.pyc
+test_view.cpython-36.pyc
 
 >>>>>>> 5d54bfbb20c14a9051c65123d324950e0b319fd6
