@@ -61,9 +61,11 @@ class MainViewTest(CBVTestCase):
 
 
 class TestRegisterView(TestCase):
+    def setUp(self):
+        self.url = reverse('cms:register')
+
     def test_valid_page_access(self):
-        url = reverse('cms:register')
-        response = self.client.get(url)
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/register.html')
         self.assertContains(response,  'username')
@@ -71,8 +73,7 @@ class TestRegisterView(TestCase):
 
     def test_valid_registration(self):
         '''Valid registration redirect to main page.'''
-        url = reverse('cms:register')
-        response = self.client.post(url, {
+        response = self.client.post(self.url, {
             'username': 'validusername',
             'password1': 'zaq1@WSX',
             'password2': 'zaq1@WSX',
@@ -82,11 +83,13 @@ class TestRegisterView(TestCase):
 
     def test_invalid_registration(self):
         '''Invalid registration redirects us again to registration page.'''
-        url = reverse('cms:register')
-        response = self.client.post(url, {
+        response = self.client.post(self.url, {
             'username': '',
             'password1': '',
             'password2': '',
         }, follow=True)
         self.assertRedirects(response, reverse('cms:register'))
+
+    def test_prevent_logged_user_access(self):
+        pass
 
