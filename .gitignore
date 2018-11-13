@@ -1,0 +1,5 @@
+__pychache__/
+htmlconv/
+db.sqlite3
+.coverage
+
