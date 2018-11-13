@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 from .models import Post
 
 
@@ -16,9 +20,20 @@ class Main(ListView):
 
 def register(request):
     if request.method == 'POST':
-        return HttpResponse
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            return redirect(reverse('cms:main'))
+            
     elif request.method == 'GET':
-        return render(request, 'registration/registration.html')
+        form = UserCreationForm()
+        return render(request, 'registration/register.html', {'form': form})
 
 
 @login_required
