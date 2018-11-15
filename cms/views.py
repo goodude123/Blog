@@ -9,6 +9,15 @@ from django.contrib.auth import login, authenticate
 from .models import Post
 
 
+def prevent_logged(function):
+    '''Prevent view logged users, redirect them to main page.'''
+    def wrapper(request):
+        if request.user.is_authenticated:
+            return redirect('cms:main')
+        function()
+    return wrapper
+
+
 class Main(ListView):
     template_name = 'post_list.html'
     context_object_name = 'posts'
