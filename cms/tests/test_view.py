@@ -36,7 +36,7 @@ class MainViewTest(CBVTestCase):
         url = reverse('cms:main')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'articles_list.html')
+        self.assertTemplateUsed(response, 'cms/articles_list.html')
 
     def test_queryset_should_return_only_three_articles(self):
         my_view = self.get_instance(views.Main)
