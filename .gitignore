@@ -1,9 +1,6 @@
 __pycache__/
 htmlcov/
 .coverage
-*cpython*
 *.pyc
 .vscode
 db.sqlite3*
-views.cpython-36.pyc
-test_view.cpython-36.pyc
