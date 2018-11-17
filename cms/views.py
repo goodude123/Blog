@@ -6,14 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from .models import Post
+from .models import Article
 from .decorators import prevent_logged
 
 
 class Main(ListView):
-    template_name = 'post_list.html'
-    context_object_name = 'posts'
-    model = Post
+    template_name = 'articles_list.html'
+    context_object_name = 'articles'
+    model = Article
     
     def get_queryset(self):
         return self.model.objects.all()[:3]
@@ -41,10 +41,10 @@ def register(request):
 
 
 @login_required
-def add_post(request):
+def add_article(request):
     return HttpResponse
 
 
 @login_required
-def edit_post(request):
+def edit_article(request):
     return HttpResponse
