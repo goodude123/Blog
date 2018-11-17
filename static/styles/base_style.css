@@ -1,0 +1,30 @@
+body {
+    width: 100%;
+}
+
+nav {
+    margin-bottom: 2em;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav a {
+    border-color: rgb(15, 125, 228);
+    border-style: solid;
+    border-width: 2px; 
+    padding: 0.5em 0.75em 0.5em 0.75em;
+    text-decoration: none;
+    color: black;
+}
+
+nav a:hover {
+    background-color: rgb(15, 125, 228);
+}
+
+nav, main, footer {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
