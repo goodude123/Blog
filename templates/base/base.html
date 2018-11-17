@@ -5,6 +5,7 @@
             {% block title %}{% endblock %} - Blog
         </title>
         {% load static %}
+        <link rel="stylesheet" href="{% static '/styles/base_style.css' %}"/>
         <link rel="shortcut icon" type="image/png" href="{% static '/favicon.ico' %}"/>
     </head>
     <body>
@@ -27,7 +28,10 @@
             {% endblock %}
         </main>
         <footer>
-            <p>Created by Michal Mietus.</p>
+            <div>
+                <hr/>
+                <p>Created by Michal Mietus.</p>
+            </div>
         </footer>
     </body>
 </html>
