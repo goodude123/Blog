@@ -7,15 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from .models import Post
-
-
-def prevent_logged(function):
-    '''Prevent view logged users, redirect them to main page.'''
-    def wrapper(request):
-        if request.user.is_authenticated:
-            return redirect('cms:main')
-        function()
-    return wrapper
+from .decorators import prevent_logged
 
 
 class Main(ListView):
@@ -27,6 +19,7 @@ class Main(ListView):
         return self.model.objects.all()[:3]
 
 
+@prevent_logged
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
