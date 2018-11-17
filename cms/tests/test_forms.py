@@ -12,8 +12,8 @@ class AddArticleFormTestCase(TestCase):
         user.save()
 
     def test_valid_AddArticle(self):
-        title = 'title'
-        content = 'content'
+        title = 'title for article'
+        content = 'article new content'
         author = User.objects.get(username='username')
         pub_date = "2011-09-01T13:20:30+03:00"
         form = AddArticleForm(
