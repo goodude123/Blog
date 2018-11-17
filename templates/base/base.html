@@ -12,6 +12,9 @@
             <ul>
                 <li><a href="{% url 'cms:main' %}">Home</a></li>
                 {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'cms:add_article' %}">New article</a></li>
+                    {% block edit %}
+                    {% endblock %}
                     <li><a href="{% url 'cms:logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'cms:login' %}">Login</a></li>

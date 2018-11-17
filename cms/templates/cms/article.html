@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block edit %}
+    <li><a href="{% url 'cms:edit_article' id_article=article.pk %}">Edit article</a></li>
+{% endblock %}
+
+{% block content %}
+    <h4 class='title'>{{ article.title }}</h4>
+    <div class='content'>{{ article.content }}</div>
+    <p class='author'>{{ article.author }}</p>
+    <p class='pub_date'>{{ article.pub_date }}</p>
+{% endblock %}

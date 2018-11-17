@@ -5,7 +5,7 @@
 {% block content %}
     <h2>Articles</h2>
     {% for article in articles %}
-        <h4 class='title'>{{ article.title }}</h4>
+        <h4 class='title'><a href="{% url 'cms:article' article.pk %}">{{ article.title }}</a></h4>
         <div class='content'>{{ article.content }}</div>
         <p class='author'>{{ article.author }}</p>
         <p class='pub_date'>{{ article.pub_date }}</p>

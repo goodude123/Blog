@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from .models import Article
 from .decorators import prevent_logged
-from .forms import AddArticleForm
+from .forms import ArticleForm
 
 
 class Main(ListView):
@@ -20,6 +20,10 @@ class Main(ListView):
     def get_queryset(self):
         return self.model.objects.all()[:3]
 
+
+class SingleArticle(DetailView):
+    model = Article
+    template_name = 'cms/article.html'
 
 @prevent_logged
 def register(request):
@@ -45,7 +49,7 @@ def register(request):
 @login_required
 def add_article(request):
     if request.method == 'POST':
-        form = AddArticleForm(request.POST)
+        form = ArticleForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
@@ -63,10 +67,16 @@ def add_article(request):
             redirect(reverse('cms:add_article'))
 
     elif request.method == 'GET':
-        form = AddArticleForm()
+        form = ArticleForm()
         return render(request, 'cms/add_article.html', {'form': form})
 
 
 @login_required
-def edit_article(request):
-    return HttpResponse
+def edit_article(request, id_article):
+    if request.method == 'POST':
+        return render(request, 'cms/edit_article.html')
+
+    elif request.method == 'GET':
+        article = Article.objects.get(pk=id_article)
+        form = ArticleForm(instance=article)
+        return render(request, 'cms/edit_article.html', {'form': form, 'id_article': id_article})
