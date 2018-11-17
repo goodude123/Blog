@@ -8,11 +8,20 @@ from .. import views
 from ..models import Article
 
 
+class SimpleUser:
+    '''Class for storing user name and password'''
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+
 class UserDatabaseOperations:
+    '''Class to primary operations on django user'''
     def create_user(self):
+        self.user = SimpleUser('user', 'zaq1@WSX')
         user = User.objects.create_user(
-            username='user',
-            password='zaq1@WSX'
+            username=self.user.username,
+            password=self.user.password,
         )
         user.save()
     
@@ -153,3 +162,46 @@ class AddNewArticleTestCase(TestCase, UserDatabaseOperations):
                 'author': 'this-isnt-user-objects',
                 'pub_date': 'this-isnt-date-object'
             })
+
+
+class EditArticleTestCase(TestCase, UserDatabaseOperations):
+    def setUp(self):
+        self.create_user()
+        user = self.get_user()
+        article = Article(
+            title='title',
+            content='thats an article content',
+            author=user,
+            pub_date=timezone.now()
+        )
+        article.save()
+
+    def test_valid_get_edit_view(self):
+        self.client.login(username=self.user.username, password=self.user.password)
+        article = Article.objects.get(author=self.get_user())
+        response = self.client.get(reverse('cms:edit_article', kwargs={'id_article':1}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, article.content)
+
+    def test_invalid_get_non_existent_article(self):
+        self.client.login(username=self.user.username, password=self.user.password)
+        article = Article.objects.latest('pk')
+        non_existing_pk = article.pk + 1
+        response = self.client.get(reverse('cms:edit_article', kwargs={'id_article':non_existing_pk}))
+        self.assertTemplateUsed(response, '404.html')
+    
+    def test_valid_edit_article(self):
+        self.client.login(username=self.user.username, password=self.user.password)
+        article_pk = Article.objects.latest('pk').pk
+        title = 'new title'
+        content = 'new content'
+        url = reverse('cms:edit_article', kwargs={'id_article':article_pk})
+
+        self.client.post(url, {
+            'title': title,
+            'content': content,
+        })
+        edited_article = Article.objects.get(pk=article_pk)
+        self.assertEqual(edited_article.title, title)
+        self.assertEqual(edited_article.content, content)
+        self.assertEqual(edited_article.author, self.get_user())
