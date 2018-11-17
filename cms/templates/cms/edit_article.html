@@ -3,6 +3,7 @@
 {% block title %}Edit article{% endblock %}
 {% block content %}
     <form action="{% url 'cms:edit_article' id_article=id_article %}" method="POST">
+        {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Edit article">
     </form>

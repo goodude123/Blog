@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse
 from django.utils import timezone
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from .models import Article
+from .models import Article, ArticleChange
 from .decorators import prevent_logged
 from .forms import ArticleForm
 
@@ -74,9 +74,33 @@ def add_article(request):
 @login_required
 def edit_article(request, id_article):
     if request.method == 'POST':
-        return render(request, 'cms/edit_article.html')
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            new_title = form.cleaned_data['title']
+            new_content = form.cleaned_data['content']
+            
+            article = get_object_or_404(Article, pk=id_article)
+            old_title = article.title
+            old_content = article.content
+
+            article.title = new_title
+            article.content = new_content
+
+            change = ArticleChange(
+                article=article,
+                user=request.user,
+                old_title=old_title,
+                new_title=new_title,
+                old_content=old_content,
+                new_content=new_content,
+            )
+
+            article.save()
+            change.save()
+
+        return redirect(reverse('cms:article', kwargs={'pk': id_article}))
 
     elif request.method == 'GET':
-        article = Article.objects.get(pk=id_article)
+        article = get_object_or_404(Article, pk=id_article)
         form = ArticleForm(instance=article)
         return render(request, 'cms/edit_article.html', {'form': form, 'id_article': id_article})
