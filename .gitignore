@@ -1,6 +1,7 @@
 __pycache__/
 htmlcov/
 .coverage
+*cpython*
 *.pyc
 .vscode
 db.sqlite3*
