@@ -4,24 +4,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from .. import views
-from ..models import Post
+from ..models import Article
 
 
 
 class MainViewTest(CBVTestCase):
     def setUp(self):
-        self.create_posts(5)
+        self.create_articles(5)
 
-    def create_posts(self, amount):
+    def create_articles(self, amount):
         user = self.create_user()
         for i in range(amount):
             title = 'title' + str(i)
-            post = Post.objects.create(
+            article = Article.objects.create(
                 title=title,
                 content='content',
                 author=user,
             )
-            post.save()
+            article.save()
 
     def create_user(self):
         user = User.objects.create(
@@ -36,19 +36,19 @@ class MainViewTest(CBVTestCase):
         url = reverse('cms:main')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'post_list.html')
+        self.assertTemplateUsed(response, 'articles_list.html')
 
-    def test_queryset_should_return_only_three_posts(self):
+    def test_queryset_should_return_only_three_articles(self):
         my_view = self.get_instance(views.Main)
         queryset = my_view.get_queryset()
         self.assertEqual(len(queryset), 3)
 
-    def test_rendered_posts_are_valid(self):
-        '''Posts on main page are three last posts from database.'''
+    def test_rendered_articles_are_valid(self):
+        '''Articles on main page are three last Articles from database.'''
         url = self.reverse('cms:main')
         response = self.client.get(url)
-        last_three_posts = Post.objects.order_by('-pub_date')[:3]
-        self.assertEqual(str(response.context['posts']), str(last_three_posts))
+        last_three_articles = Article.objects.order_by('-pub_date')[:3]
+        self.assertEqual(str(response.context['articles']), str(last_three_articles))
 
     def test_template_render(self):
         url = self.reverse('cms:main')

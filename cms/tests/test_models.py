@@ -2,10 +2,10 @@ from datetime import datetime
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
-from ..models import Post
+from ..models import Article
 
 
-class PostTestCase(TestCase):
+class ArticleTestCase(TestCase):
     def setUp(self):
         user = User(
              username='user',
@@ -16,43 +16,43 @@ class PostTestCase(TestCase):
         )
         user.save()
 
-        post = Post.objects.create(
+        article = Article.objects.create(
             title='title',
             content='content',
             author=user
         )
-        post.save()
+        article.save()
 
-    def test_valid_create_post(self):
-        '''Valid post create'''
+    def test_valid_create_article(self):
+        '''Valid article create'''
         user = User.objects.get(username='user')
-        post = Post.objects.get(author=user)
+        article = Article.objects.get(author=user)
         
-        self.assertEqual(post.content, 'content')
-        self.assertEqual(post.title, 'title')
+        self.assertEqual(article.content, 'content')
+        self.assertEqual(article.title, 'title')
 
-    def test_invalid_create_post_without_author(self):
-        '''Creating post without author causes error'''
+    def test_invalid_create_article_without_author(self):
+        '''Creating article without author causes error'''
         with self.assertRaises(IntegrityError):
-            post = Post.objects.create(content='Some content.')
+            article = Article.objects.create(content='Some content.')
 
-    def test_post_str_representation(self):
+    def test_article_str_representation(self):
         user = User.objects.get(username='user')
-        post = Post.objects.get(author=user)
+        article = Article.objects.get(author=user)
 
-        self.assertEqual(str(post), 'title')
+        self.assertEqual(str(article), 'title')
 
-    def test_post_date_published(self):
+    def test_article_date_published(self):
         '''Pub date is equal to save time'''
         user = User.objects.get(username='user')
-        post = Post.objects.create(
+        article = Article.objects.create(
             title='title',
             content='content',
             author=user
         )
         now = str(datetime.now())
         now = now.split()[0]
-        post.save()
+        article.save()
         
-        self.assertEqual(str(post.pub_date), now)
+        self.assertEqual(str(article.pub_date), now)
     
