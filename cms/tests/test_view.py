@@ -1,5 +1,6 @@
 from test_plus.test import CBVTestCase
 from django.test import TestCase
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
@@ -7,13 +8,26 @@ from .. import views
 from ..models import Article
 
 
+class UserDatabaseOperations:
+    def create_user(self):
+        user = User.objects.create_user(
+            username='user',
+            password='zaq1@WSX'
+        )
+        user.save()
+    
+    def get_user(self):
+        user = User.objects.get(username='user')
+        return user
 
-class MainViewTest(CBVTestCase):
+
+class MainViewTest(CBVTestCase, UserDatabaseOperations):
     def setUp(self):
         self.create_articles(5)
 
     def create_articles(self, amount):
-        user = self.create_user()
+        self.create_user()
+        user = self.get_user()
         for i in range(amount):
             title = 'title' + str(i)
             article = Article.objects.create(
@@ -22,15 +36,6 @@ class MainViewTest(CBVTestCase):
                 author=user,
             )
             article.save()
-
-    def create_user(self):
-        user = User.objects.create(
-            username='user',
-            password='zaq1@WSX'
-        )
-        user.save()
-        
-        return user
 
     def test_valid_page_access(self):
         url = reverse('cms:main')
@@ -93,3 +98,58 @@ class TestRegisterView(TestCase):
     def test_prevent_logged_user_access(self):
         pass
 
+
+class AddNewArticleTestCase(TestCase, UserDatabaseOperations):
+    def setUp(self):
+        self.create_user()
+
+    def test_redirect_to_main_page_unlogged_users(self):
+        response = self.client.get(reverse('cms:add_article'))
+        self.assertRedirects(response, '/accounts/login/?next=/add_article/')
+
+    def test_valid_page_access(self):
+        self.client.login(username='user', password='zaq1@WSX')
+        response = self.client.get(reverse('cms:add_article'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('cms/add_article.html')
+
+    def test_valid_add_new_article(self):
+        user = self.get_user()
+        self.client.login(username='user', password='zaq1@WSX')
+        response = self.client.post(reverse('cms:add_article'), {
+            'title': 'title',
+            'content': 'content',
+            'author': user,
+            'pub_date': timezone.now()
+        })
+        user_articles_count = Article.objects.filter(author=user).count()
+        self.assertEqual(user_articles_count, 1)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('cms:main'))
+
+    def test_invalid_data_add_new_article(self):
+        '''Invalid data post, but still creates good article'''
+        user = self.get_user()
+        self.client.login(username='user', password='zaq1@WSX')
+        response = self.client.post(reverse('cms:add_article'), {
+            'title': 'title',
+            'content': 'content',
+            'author': 'this-isnt-user-objects',
+            'pub_date': 'this-isnt-date-object'
+        })
+        user_articles_count = Article.objects.filter(author=user).count()
+        self.assertEqual(user_articles_count, 1)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('cms:main'))
+
+    def test_invalid_data_and_invalid_form_redirect(self):
+        '''Invalid data and invalid form raises value error, because there is no data'''
+        user = self.get_user()
+        self.client.login(username='user', password='zaq1@WSX')
+        with self.assertRaises(ValueError):
+            response = self.client.post(reverse('cms:add_article'), {
+                'title': '',
+                'content': '',
+                'author': 'this-isnt-user-objects',
+                'pub_date': 'this-isnt-date-object'
+            })
