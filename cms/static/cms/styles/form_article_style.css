@@ -1,0 +1,21 @@
+input, label {
+    display: block;
+}
+
+textarea {
+    resize: none;
+    width: 80%;
+}
+
+#id_content {
+    width: 80%;
+    height: 80%;
+}
+
+input {
+    width: 20%;
+    min-width: 100px;
+    margin-left: 40%;
+    margin-right: 40%;
+    wrap: none;
+}

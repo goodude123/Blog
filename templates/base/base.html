@@ -6,6 +6,7 @@
         </title>
         {% load static %}
         <link rel="stylesheet" href="{% static '/styles/base_style.css' %}"/>
+        {% block styles %} {% endblock %}
         <link rel="shortcut icon" type="image/png" href="{% static '/favicon.ico' %}"/>
     </head>
     <body>
@@ -14,7 +15,7 @@
                 <li><a href="{% url 'cms:main' %}">Home</a></li>
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'cms:add_article' %}">New article</a></li>
-                    {% block edit %}
+                    {% block nav_bar_logged %}
                     {% endblock %}
                     <li><a href="{% url 'cms:logout' %}">Logout</a></li>
                 {% else %}
