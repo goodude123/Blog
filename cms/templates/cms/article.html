@@ -1,14 +1,22 @@
 {% extends 'base/base.html' %}
 
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cms/styles/article_list_styles.css' %}">
+{% endblock %}
+
 {% block title %}{{ article.title }}{% endblock %}
 
-{% block edit %}
+{% block nav_bar_logged %}
     <li><a href="{% url 'cms:edit_article' id_article=article.pk %}">Edit article</a></li>
 {% endblock %}
 
 {% block content %}
-    <h4 class='title'>{{ article.title }}</h4>
-    <div class='content'>{{ article.content }}</div>
-    <p class='author'>{{ article.author }}</p>
-    <p class='pub_date'>{{ article.pub_date }}</p>
+    <article>
+        <h4 class='title'>{{ article.title }}</h4>
+        <div class='content'>{{ article.content }}</div>
+        <p class='author'>{{ article.author }}</p>
+        <p class='pub_date'>{{ article.pub_date }}</p>
+    </article>
 {% endblock %}
