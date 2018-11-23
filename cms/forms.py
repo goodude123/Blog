@@ -13,7 +13,7 @@ class ArticleForm(forms.ModelForm):
                 'placeholder': 'Title',
             }),
             'content': forms.Textarea(attrs={
-                'rows': 40,
+                'rows': 30,
                 'placeholder': 'Article text',
             })
         }
