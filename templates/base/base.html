@@ -14,20 +14,29 @@
         <link rel="icon" sizes="16x16" href="{% static '/favicon.ico' %}">
     </head>
     <body>
-        <nav>
+        <div id="social_media">
             <ul>
-                <li><a href="{% url 'cms:main' %}">Home</a></li>
-                {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'cms:add_article' %}">New article</a></li>
-                    {% block nav_bar_logged %}
-                    {% endblock %}
-                    <li><a href="{% url 'cms:logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'cms:login' %}">Login</a></li>
-                    <li><a href="{% url 'cms:register' %}">Register</a></li>
-                {% endif %}
+                <li id='facebook'>F</li>
+                <li id='twitter'>T</li>
+                <li id='gmail'>G</li>
             </ul>
-        </nav>
+        </div>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'cms:main' %}">Home</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'cms:add_article' %}">New article</a></li>
+                        {% block nav_bar_logged %}
+                        {% endblock %}
+                        <li><a href="{% url 'cms:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'cms:login' %}">Login</a></li>
+                        <li><a href="{% url 'cms:register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
         <main>
             {% block content %}
             {% endblock %}
