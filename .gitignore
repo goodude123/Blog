@@ -4,3 +4,5 @@ htmlcov/
 *.pyc
 .vscode
 db.sqlite3*
+*.png
+*.ico
