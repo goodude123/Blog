@@ -104,3 +104,16 @@ def edit_article(request, id_article):
         article = get_object_or_404(Article, pk=id_article)
         form = ArticleForm(instance=article)
         return render(request, 'cms/edit_article.html', {'form': form, 'id_article': id_article})
+
+
+def delete_article(request, id_article):
+    if request.user.is_superuser:
+        article = get_object_or_404(Article, pk=id_article)
+        article_title = article.title
+        article.delete()
+        information = 'Deleted article ' + article_title
+        return render(request, 'cms/information.html', {'information': information, 'title': 'Deleted'})
+    else:
+        information = 'Denied access'
+        title = 'Denied access'
+        return render(request, 'cms/information.html', {'information': information, 'title': title})
