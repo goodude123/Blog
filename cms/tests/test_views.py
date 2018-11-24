@@ -205,3 +205,53 @@ class EditArticleTestCase(TestCase, UserDatabaseOperations):
         self.assertEqual(edited_article.title, title)
         self.assertEqual(edited_article.content, content)
         self.assertEqual(edited_article.author, self.get_user())
+
+
+class DeleteArticleTestCase(TestCase, UserDatabaseOperations):
+    def setUp(self):
+        self.create_superuser()
+        self.create_user()
+        self.create_articles(1)
+   
+    def create_superuser(self):
+        self.super_user = User(username='superuser')
+        self.super_user.set_password('password')
+        self.super_user.is_superuser = True
+        self.super_user.is_staff = True
+        self.super_user.save()
+    
+    def create_articles(self, amount):
+        user = self.get_user()
+        for i in range(amount):
+            title = 'title' + str(i)
+            article = Article.objects.create(
+                title=title,
+                content='content',
+                author=user,
+            )
+            article.save()
+
+    def test_is_superuser(self):
+        self.assertTrue(self.super_user.is_superuser)
+
+    def test_user_without_permission_delete_article_denied(self):
+        self.client.login(username=self.user.username, password=self.user.password)
+        id_article = Article.objects.get(author=self.get_user()).pk
+        response = self.client.get(reverse('cms:delete_article', kwargs={
+            'id_article': id_article,
+        }))
+        self.assertTrue(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cms/information.html')
+        text = b'Denied access'
+        self.assertContains(response, text)
+
+    def test_super_user_correctly_delete_article(self):
+        self.client.login(username='superuser', password='password')
+        id_article = Article.objects.get(author=self.get_user()).pk
+        response = self.client.get(reverse('cms:delete_article', kwargs={
+            'id_article': id_article,
+        }))
+        self.assertTrue(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cms/information.html')
+        text = b'Deleted article'
+        self.assertContains(response, text)

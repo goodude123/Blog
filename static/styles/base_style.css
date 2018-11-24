@@ -78,3 +78,19 @@ nav a:hover {
 }
 
 /* end nav */
+#social_media ul {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    width: 8em;
+    margin-top: -2.5em;
+    margin-left: -2.5em;
+    text-decoration: none;
+}
+
+#social_media ul li {
+    margin-right: 7em;
+    display: block;
+    text-decoration: none;
+    background-color: rgb(53, 150, 241);
+}
