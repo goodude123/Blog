@@ -5,3 +5,12 @@ main article {
     width: 70%;
     margin: 0 auto;
 }
+
+main article .delete {
+    text-align: right;
+}
+
+.delete a {
+    color: red;
+    text-decoration: underline;
+}
