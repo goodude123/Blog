@@ -11,23 +11,12 @@
         <link rel="stylesheet" href="{% static '/styles/base_style.css' %}">
         {% block styles %} {% endblock %}
         {% block scripts %} {% endblock %}
+        <!-- Google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans" rel="stylesheet"> 
         <link rel="shortcut icon" type="image/png" href="{% static '/icons/favicon.ico' %}">
         <link rel="icon" sizes="16x16" href="{% static '/icons/favicon.ico' %}">
     </head>
     <body>
-        <div id="social_media">
-            <ul>
-                <li class="social-ico">
-                    <a href="http://www.facebook.com" target="_blank"><img src="{% static '/icons/icons-64px/facebook-ico.png' %}"></a>
-                </li>
-                <li class="social-ico">
-                    <a href="http://www.twitter.com" target="_blank"><img src="{% static '/icons/icons-64px/twitter-ico.png' %}"></a>
-                </li>
-                <li class="social-ico">
-                    <a href="http://www.instagram.com" target="_blank"><img src="{% static '/icons/icons-64px/instagram-ico.png' %}">
-                </li>
-            </ul>
-        </div>
         <header>
             <nav>
                 <ul>
@@ -45,6 +34,19 @@
             </nav>
         </header>
         <main>
+            <div id="social_media">
+                <ul>
+                    <li class="social-ico">
+                        <a href="http://www.facebook.com" target="_blank"><img src="{% static '/icons/icons-64px/facebook-ico.png' %}"></a>
+                    </li>
+                    <li class="social-ico">
+                        <a href="http://www.twitter.com" target="_blank"><img src="{% static '/icons/icons-64px/twitter-ico.png' %}"></a>
+                    </li>
+                    <li class="social-ico">
+                        <a href="http://www.instagram.com" target="_blank"><img src="{% static '/icons/icons-64px/instagram-ico.png' %}"></a>
+                    </li>
+                </ul>
+            </div>
             {% block content %}
             {% endblock %}
         </main>
