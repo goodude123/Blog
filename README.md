@@ -1,8 +1,6 @@
 # Blog
 
-Blog project.
-
-Web application for publishing posts.
+Web blog application.
 
 ## External packages:
   - django
