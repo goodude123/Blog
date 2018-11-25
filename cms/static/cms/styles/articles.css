@@ -5,6 +5,10 @@ main article {
     margin: 1em auto;
 }
 
+h2, h4 {
+    font-family: 'Merriweather', serif;
+}
+
 main article .delete {
     text-align: right;
 }

@@ -114,7 +114,7 @@ class AddNewArticleTestCase(TestCase, UserDatabaseOperations):
 
     def test_redirect_to_main_page_unlogged_users(self):
         response = self.client.get(reverse('cms:add_article'))
-        self.assertRedirects(response, '/accounts/login/?next=/add_article/')
+        self.assertRedirects(response, '/accounts/login/?next=/article/add/')
 
     def test_valid_page_access(self):
         self.client.login(username='user', password='zaq1@WSX')
