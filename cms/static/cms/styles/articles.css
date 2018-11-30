@@ -5,6 +5,10 @@ main article {
     margin: 1em auto;
 }
 
+main article .content {
+    white-space: pre;
+}
+
 h2, h4 {
     font-family: 'Merriweather', serif;
 }
