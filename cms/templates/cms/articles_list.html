@@ -18,7 +18,7 @@
         <article>
             <h4 class='title'><a href="{% url 'cms:article' article.pk %}">{{ article.title }}</a></h4>
             <div class='content'>{{ article.content }}</div>
-            <p class='author'>{{ article.author }}</p>
+            <p class='author'>Author: {{ article.author }}</p>
             <p class='pub_date'>{{ article.pub_date }}</p>
             {% if request.user.is_superuser %}
                 <span class='delete'><a onclick="return onDeleteArticle()" href="{% url 'cms:delete_article' article.pk %}">Delete</a></span>
