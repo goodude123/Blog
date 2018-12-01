@@ -6,7 +6,7 @@ main article {
 }
 
 main article .content {
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 h2, h4 {
