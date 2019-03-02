@@ -11,8 +11,9 @@ Application that allows users to share their industries.
 
 
 ## Technologies:
-  - Django
-  - Django REST Framework
+  - Python 3.6.7
+  - Django 2.1.5
+  - Django REST Framework 3.9.0
   - Django Filter
   - SQLAlchemy
   
