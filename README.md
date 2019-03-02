@@ -5,8 +5,9 @@ Web blog application.
 Application that allows users to share their industries.
 
 ## Features
-* login/register user
-* the ability to add posts for logged users
+* login and register user system
+* adding posts visible for logged users
+* deleting views by owners
 * REST Api for mobile application
 
 
