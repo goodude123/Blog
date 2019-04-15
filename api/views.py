@@ -13,8 +13,6 @@ class ObtainAuthTokenAndUserId(ObtainAuthToken):
         return Response({'token': token.key, 'id': token.user_id})
 
 
-
-
 class ArticleView(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
