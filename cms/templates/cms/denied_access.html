@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cms/styles/information.css' %}">
+{% endblock %}
+
+{% block title %}Denied access{% endblock %}
+
+{% block content %}
+    <div class='information'>
+        <p>Denied access.</p>
+    </div>
+{% endblock %}
