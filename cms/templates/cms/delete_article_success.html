@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cms/styles/information.css' %}">
+{% endblock %}
+
+{% block title %}Deleted{% endblock %}
+
+{% block content %}
+    <div class='information'>
+        <p>Article was delated</p>
+    </div>
+{% endblock %}
