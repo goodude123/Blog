@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/register/', views.RegisterView.as_view(), name='register'),
     path('article/<int:pk>/', views.SingleArticle.as_view(), name='article'),
     path('article/add/', views.AddArticleView.as_view(), name='add_article'),
+    path('article/add/success/', views.AddArticleSuccess.as_view(), name='add_article_success'),
     path('article/edit/<int:id_article>/', views.EditArticleView.as_view(), name='edit_article'),
     path('article/delete/<int:pk>/', views.DeleteArticleView.as_view(), name='delete_article'),
     path('article/delete/success/', views.DeleteArticleSuccessView.as_view(), name='delete_article_success'),
