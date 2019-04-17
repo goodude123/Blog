@@ -1,17 +1,22 @@
 {% extends 'base/base.html' %}
 
-
-{% block styles %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'cms/styles/form_article_style.css' %}">
-{% endblock %}
-
 {% block title %}Add article{% endblock %}
 
 {% block content %}
     <form action="{% url 'cms:add_article' %}" method='POST'>
         {% csrf_token %}
-        {{ form.as_p}}
-        <input type="submit" value="Add article">
+        {{ form.non_field_errors }}
+        {% for field in form %}
+
+        <div class="input-group mb-3">
+            <div class="form-group">
+                {{ field.label }}
+                {{ field }} 
+            </div>
+        </div>
+
+        {{ field.errors }}
+        {% endfor %}
+        <button type="submit" class="btn btn-outline-primary">Add article</button>
     </form>
 {% endblock %}
