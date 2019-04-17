@@ -8,13 +8,14 @@ class ArticleForm(forms.ModelForm):
         exclude = ['author', 'pub_date']
         widgets = {
             'title': forms.Textarea(attrs={
-                'rows': 1, 
-                'cols': 30,
                 'placeholder': 'Title',
+                'class': 'form-control',
+                'aria-label': 'With textarea',
             }),
             'content': forms.Textarea(attrs={
-                'rows': 30,
                 'placeholder': 'Article text',
+                'class': 'form-control',
+                'aria-label': 'With textarea',
             })
         }
         
