@@ -6,24 +6,27 @@
     <script type="text/javascript" src="{% static 'cms/scripts/delete_article.js'%}"></script>
 {% endblock %}
 
-{% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'cms/styles/articles.css' %}">
-{% endblock %}
-
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block nav_bar_logged %}
-    <li><a href="{% url 'cms:edit_article' id_article=article.pk %}">Edit article</a></li>
+    <li class="nav-item">
+        <a class="nav-link active" href="{% url 'cms:edit_article' id_article=article.pk %}">Edit article</a>
+    </li>
 {% endblock %}
 
 {% block content %}
-    <article>
-        <h4 class='title'>{{ article.title }}</h4>
-        <div class='content'>{{ article.content }}</div>
-        <p class='author'>Author: {{ article.author }}</p>
-        <p class='pub_date'>{{ article.pub_date }}</p>
-        {% if request.user.is_superuser %}
-            <span class='delete'><a onclick="return onDeleteArticle()" href="{% url 'cms:delete_article' article.pk %}">Delete</a></span>
-        {% endif %}
+    <article class="mb-4">
+        <div class="card">
+            <div class="card-body">
+            <h4 class='title card-title'><a href="{% url 'cms:article' article.pk %}">{{ article.title }}</a></h4>
+            <p class="card-text">{{ article.content }}</p>
+            <p class='author'>Author: {{ article.author }}</p>
+            <p class='pub_date'>{{ article.pub_date }}</p>
+            {% if request.user.is_superuser %}
+                <button type="button" class="btn btn-danger btn-sm">
+                    <a onclick="return onDeleteArticle()" class="text-white" href="{% url 'cms:delete_article' article.pk %}">Delete</a>    
+                </button>
+            {% endif %}
+        </div>
     </article>
 {% endblock %}
