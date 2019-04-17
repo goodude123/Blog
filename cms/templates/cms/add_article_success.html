@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Deleted{% endblock %}
+
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        <div class="row">
+            <div class="col-lg-9">Article was created!</div>
+            <div class="col-lg-1 my-2">
+                <a class="btn btn-primary" href="{% url 'cms:main' %}" role="button">Home</a>
+            </div>
+            <div class="col-lg-2 my-2">
+                <a class="btn btn-primary" href="{% url 'cms:add_article' %}" role="button">Add article</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
