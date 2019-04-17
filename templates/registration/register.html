@@ -1,11 +1,30 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block title %}Register{% endblock %}
 
 {% block content %}
+    <h2>Register</h2>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="input-group mb-3">
+                <div class="form-group">
+                    {{ field.label }}
+                    {{ field }} 
+                </div>
+            </div>
+            {{ field.errors }}
+        {% endfor %}
+        <button type="submit" class="btn btn-outline-primary">Register</button>
     </form>
+{% endblock %}
+
+{% block end-scripts %}
+<script src="{% static 'js/addToElementsClass.js' %}"></script>
+<script>
+    console.log('ADDING');
+    addToElementsClass('input', 'form-control');
+</script>
 {% endblock %}
