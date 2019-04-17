@@ -5,43 +5,72 @@
             {% block title %}{% endblock %} - Blog
         </title>
         <meta name="description" content="Blog Content Management System">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="theme-color" content="#23a1f5">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- Local Styles -->
         {% load static %}
-        <link rel="stylesheet" href="{% static '/styles/base_style.css' %}">
+        <link rel="stylesheet" href="{% static '/styles/base.css' %}">
         {% block styles %} {% endblock %}
+
+        <!-- Local Scripts -->
         {% block scripts %} {% endblock %}
+
         <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans" rel="stylesheet"> 
+
         <link rel="shortcut icon" type="image/png" href="{% static '/icons/favicon.ico' %}">
         <link rel="icon" sizes="16x16" href="{% static '/icons/favicon.ico' %}">
     </head>
     <body>
         <header>
-            <nav>
-                <ul>
-                    <li><a href="{% url 'cms:main' %}">Home</a></li>
+            <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'cms:main' %}">Home</a>
+                    </li>
                     {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'cms:add_article' %}">New article</a></li>
-                        {% block nav_bar_logged %}
-                        {% endblock %}
-                        <li><a href="{% url 'cms:logout' %}">Logout</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cms:add_article' %}">New article</a>
+                    </li>
+                    {% block nav_bar_logged %}
+                    {% endblock %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cms:logout' %}">Logout</a>
+                    </li>
                     {% else %}
-                        <li><a href="{% url 'cms:login' %}">Login</a></li>
-                        <li><a href="{% url 'cms:register' %}">Register</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cms:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cms:register' %}">Register</a>
+                    </li>
                     {% endif %}
                 </ul>
             </nav>
         </header>
         <main>
-            {% block content %}
-            {% endblock %}
+            <div class="container mt-3">
+                {% block content %}
+                {% endblock %}
+            </div>
         </main>
-        <footer>
-            <div>
-                <hr/>
-                <p>Created by Michal Mietus.</p>
+        <!-- Footer -->
+        <footer class="page-footer font-small">
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2018 Author:
+                <a href="https://github.com/michal-mietus/"> Michał Miętus</a>
             </div>
         </footer>
+
+        <!-- Bootstrap Js -->
+        {% block end-scripts %}
+        {% endblock %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
 </html> 
