@@ -40,18 +40,17 @@ class RegisterView(FormView):
         login(self.request, user)
         return redirect(reverse('cms:main'))
 
-    def form_invalid(self, form):
-        return redirect(reverse('cms:register'))
-
 
 @method_decorator(login_required, name='dispatch')
 class AddArticleView(FormView):
     form_class = ArticleForm
     template_name = 'cms/add_article.html'
+    success_url = reverse_lazy('cms:add_article_success')
 
     def form_valid(self, form):
+        print('VALID')
         self.create_article(form)
-        return redirect(reverse('cms:main'))
+        return super().form_valid(form)
     
     def create_article(self, form):
         title = form.cleaned_data['title']
@@ -66,8 +65,9 @@ class AddArticleView(FormView):
         )
         article.save()
 
-    def form_invalid(self, form):
-        redirect(reverse('cms:add_article'))
+
+class AddArticleSuccess(TemplateView):
+    template_name = 'cms/add_article_success.html'
 
 
 class EditArticleView(FormView):
