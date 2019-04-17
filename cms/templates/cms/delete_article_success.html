@@ -1,15 +1,18 @@
 {% extends 'base/base.html' %}
 
-
-{% block styles %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'cms/styles/information.css' %}">
-{% endblock %}
-
 {% block title %}Deleted{% endblock %}
 
 {% block content %}
-    <div class='information'>
-        <p>Article was delated</p>
+    <div class="alert alert-success" role="alert">
+        <div class="row">
+            <div class="col-lg-9">Article was deleted!</div>
+            <div class="col-lg-1 my-2">
+                <a class="btn btn-primary" href="{% url 'cms:main' %}" role="button">Home</a>
+            </div>
+            <div class="col-lg-2 my-2">
+                <a class="btn btn-primary" href="{% url 'cms:add_article' %}" role="button">Add article</a>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
