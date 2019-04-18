@@ -8,5 +8,6 @@ router.register('article', views.ArticleView)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-token-auth/', views.ObtainAuthTokenAndUserId.as_view(), name='api-token-auth')
+    path('api-token-auth/', views.ObtainAuthTokenAndUserId.as_view(), name='api-token-auth'),
+    path('register/', views.RegisterView.as_view(), name='register'),
 ]
