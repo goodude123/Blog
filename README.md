@@ -1,19 +1,21 @@
 # Blog
 
-Web blog application.
+Application that allows users to share their thoughts, stories or asking question. Everything what can be shared between people.
 
-Application that allows users to share their industries.
+[Page Link](http://blogapp-mm.herokuapp.com/)
 
-[Page Link](http://hostingsme.pythonanywhere.com/)
+### Features
+- login and register user system
+- adding posts visible for logged users
+- deleting views by owners or administator
+- REST Api for mobile application
 
-## Features
-* login and register user system
-* adding posts visible for logged users
-* deleting views by owners
-* REST Api for mobile application
+### Future improves
+- add sections to group posts, articles
+- add permissions and groups to allow people share some
+  posts personally
 
-
-## Technologies:
+### Technologies:
   - Python 3.6.7
   - Django 2.1.5
   - Django REST Framework 3.9.0
